@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from torch.backends import mps
 import torch.optim as optim
 import matplotlib.pyplot as plt
-
+import torch.nn as nn 
 from net_covid19 import Covid19Net
 import time
 
@@ -30,7 +30,9 @@ else: # CPU
     device = torch.device('cpu')
 
 # device = torch.device('cpu') # uncomment this line to run on CPU
-
+print(20*"#")
+print("Device used: ", device)
+print(20*"#")
 # Define the transformations
 image_transform = torchvision.transforms.Compose([
     torchvision.transforms.Resize((224, 224)),  # Resize the image to 224x224
@@ -70,7 +72,7 @@ print(f'Shape of label tensors: {labels.shape}')
 
 # Display the batch of images
 class_labels_string = ', '.join([class_labels[label] for label in labels]) # Create a string of class labels indexed by labels
-imshow(torchvision.utils.make_grid(images), title = class_labels_string)
+# imshow(torchvision.utils.make_grid(images), title = class_labels_string)
 # plt.title(class_labels_string)
 
 print(class_labels_string)
@@ -84,10 +86,10 @@ net.to(device) # move the model to the device
 
 # define the loss function and optimizer
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.SGD(net.parameters(), lr=0.0025, momentum=0.9)
 
 
-num_epochs = 10 # loop over the dataset multiple times
+num_epochs = 20 # loop over the dataset multiple times
 
 start_time = time.time()
 for epoch in range(num_epochs): # one epoch is a complete pass through the train dataset
@@ -95,13 +97,18 @@ for epoch in range(num_epochs): # one epoch is a complete pass through the train
     for batch_index, data in enumerate(train_loader):
         images, labels = data # get the inputs; data is a list of [inputs, labels]
         # inputs.shape, labels.shape
-
+        # images = images[:,0:2]
+        # labels = labels[:,0]
         images, labels = images.to(device), labels.to(device) # move the data to the device
         # zero the parameter gradients
         optimizer.zero_grad()
-
+        
         # forward + backward + optimize
         outputs = net(images)
+        # outputs = outputs[:,0]
+        # print(outputs.shape)
+        # print(labels.shape)
+
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
