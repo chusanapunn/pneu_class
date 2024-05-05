@@ -8,7 +8,9 @@ import torch.optim as optim
 import matplotlib.pyplot as plt
 import torch.nn as nn 
 from net_covid19 import Covid19Net
+from net_a import ANET
 import time
+
 
 def imshow(img, title=None):
   ''' function to show image '''
@@ -79,7 +81,8 @@ print(class_labels_string)
 print([class_labels[label] for label in labels])
 
 # Define the model
-net = Covid19Net()
+# net = Covid19Net()
+net = ANET()
 print(net)
 
 net.to(device) # move the model to the device
@@ -89,7 +92,7 @@ criterion = torch.nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.0030, momentum=0.9)
 
 
-num_epochs = 60 # loop over the dataset multiple times
+num_epochs = 80 # loop over the dataset multiple times
 
 e_ = np.arange(1,num_epochs+1,1)
 loss_ = []
@@ -98,25 +101,19 @@ start_time = time.time()
 for epoch in range(num_epochs): # one epoch is a complete pass through the train dataset
     epoch_loss = 0.0
     for batch_index, data in enumerate(train_loader):
-        images, labels = data # get the inputs; data is a list of [inputs, labels]
-        # inputs.shape, labels.shape
-        # images = images[:,0:2]
-        # labels = labels[:,0]
-        images, labels = images.to(device), labels.to(device) # move the data to the device
-        # zero the parameter gradients
+        images, labels = data 
+        images, labels = images.to(device), labels.to(device)
+
+
         optimizer.zero_grad()
-        
-        # forward + backward + optimize
         outputs = net(images)
         # outputs = outputs[:,0]
         # print(outputs.shape)
         # print(labels.shape)
-
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
 
-        # print statistics
         epoch_loss += loss.item()
 
     loss_.append(epoch_loss)
@@ -126,23 +123,22 @@ end_time = time.time()
 execution_time = end_time - start_time
 print(f"Training completed in {execution_time} seconds")
 
-
-# store the model
-torch.save(net.state_dict(), project_path + 'covid19_net.pth')
-
-# reload saved model
-net = Covid19Net()
-net.load_state_dict(torch.load(project_path + 'covid19_net.pth'))
+torch.save(net.state_dict(), project_path + 'a_net.pth')
+net = ANET()
+net.load_state_dict(torch.load(project_path + 'a_net.pth'))
 
 correct = 0
 total = 0
+
 with torch.no_grad():
     for data in test_loader:
         images, labels = data
         outputs = net(images)
-        _, predicted = torch.max(outputs.data, 1)
+        _, predicted = torch.max(outputs.data, 1)   
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
+
+
 
 print('Accuracy of the network on the %d test images: %d %%' % (total, 100 * correct / total))
 print('Training done on device:', device)

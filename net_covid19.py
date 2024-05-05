@@ -4,7 +4,7 @@ import torch.nn.functional as F # import convolution functions like Relu
 class Covid19Net(nn.Module):
   '''Models a simple Convolutional Neural Network'''
 
-  def __init__(self, num_classes=3):
+  def __init__(self, num_classes=2):
     super(Covid19Net, self).__init__()
     
     # convolutional layer 1 & max pool layer 1
