@@ -19,7 +19,7 @@ def imshow(img, title=None):
 
 # setup some path variables
 project_path = './'
-data_path = project_path + 'data/Pneumonia/X-Ray/'
+data_path = project_path + 'data/Pneumonia/X-Ray_70-30/'
 
 # select device to run the computations on
 if mps.is_available(): # MAcOS with Metal support
@@ -86,10 +86,13 @@ net.to(device) # move the model to the device
 
 # define the loss function and optimizer
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.0025, momentum=0.9)
+optimizer = optim.SGD(net.parameters(), lr=0.0030, momentum=0.9)
 
 
-num_epochs = 20 # loop over the dataset multiple times
+num_epochs = 60 # loop over the dataset multiple times
+
+e_ = np.arange(1,num_epochs+1,1)
+loss_ = []
 
 start_time = time.time()
 for epoch in range(num_epochs): # one epoch is a complete pass through the train dataset
@@ -116,6 +119,7 @@ for epoch in range(num_epochs): # one epoch is a complete pass through the train
         # print statistics
         epoch_loss += loss.item()
 
+    loss_.append(epoch_loss)
     print(f'Epoch: {epoch}, Loss: {epoch_loss}') # print the loss every epoch
 
 end_time = time.time()
@@ -142,3 +146,5 @@ with torch.no_grad():
 
 print('Accuracy of the network on the %d test images: %d %%' % (total, 100 * correct / total))
 print('Training done on device:', device)
+plt.plot(e_,loss_)
+plt.show()
