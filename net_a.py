@@ -23,6 +23,14 @@ class ANET(nn.Module):
         nn.ReLU(),
         nn.MaxPool2d(kernel_size=2))
     
+    # self.layer3 = nn.Sequential(
+    #     nn.Conv2d(32, 32, kernel_size=4),
+    #     # nn.BatchNorm2d(32),
+    #     nn.Dropout(0.1),
+    #     nn.ReLU(),
+    #     nn.MaxPool2d(kernel_size=2))
+    
+
     #Fully connected layer
     # self.dropout = nn.Dropout(0.1)
     self.fc = nn.Linear(32*54*54, num_classes)
@@ -32,6 +40,7 @@ class ANET(nn.Module):
     #   out = self.dropout(x)
       out = self.layer1(x)
       out = self.layer2(out)
+      # out = self.layer3(out)
       out = out.reshape(out.size(0), -1)
       out = self.fc(out)
       return out

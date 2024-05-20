@@ -21,3 +21,7 @@ Python file of covid19 neural net structure
 ## net_a.py
 
 Python file of new design neural network structure with Dropout/ 3 layers that is not in use
+
+## gitignore
+
+Using git ignore to ignore data, environment, and report images folder from increasing github pushing time
