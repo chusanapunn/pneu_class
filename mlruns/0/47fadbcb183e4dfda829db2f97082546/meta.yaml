@@ -1,0 +1,15 @@
+artifact_uri: file:///u:/ZHAW/DSH/pneu_class/mlruns/0/47fadbcb183e4dfda829db2f97082546/artifacts
+end_time: 1716483271068
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 47fadbcb183e4dfda829db2f97082546
+run_name: honorable-newt-562
+run_uuid: 47fadbcb183e4dfda829db2f97082546
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716483134789
+status: 4
+tags: []
+user_id: chusa

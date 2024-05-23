@@ -37,7 +37,6 @@ class ANET(nn.Module):
 
   # Feed forward the network
   def forward(self, x):
-    #   out = self.dropout(x)
       out = self.layer1(x)
       out = self.layer2(out)
       # out = self.layer3(out)
