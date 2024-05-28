@@ -13,6 +13,8 @@ The main steps involved in the project are:
 4. **Training and Validation**: Trained the models using 70-30 Random Train-Test Split and 5 k-fold cross-validation.
 5. **Evaluation**: Assessed models using accuracy, precision, recall, F1-score metrics, Confusion matrix, and Cross-Validation Loss. Generated visualizations of training results.
 
+Eval Results with current Dataset: Train-Test Split 70-30 ~ 99.1 % , 5 Fold Cross Validation ~ 94 %
+
 ### Repository Structure
 
 - **0_test.ipynb**: Tests data loading, image display, and computing device configuration.
