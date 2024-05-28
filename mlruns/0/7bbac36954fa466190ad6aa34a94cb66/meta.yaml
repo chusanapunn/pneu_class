@@ -1,0 +1,15 @@
+artifact_uri: file:///u:/ZHAW/DSH/pneu_class/mlruns/0/7bbac36954fa466190ad6aa34a94cb66/artifacts
+end_time: 1716903559840
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7bbac36954fa466190ad6aa34a94cb66
+run_name: clean-hen-488
+run_uuid: 7bbac36954fa466190ad6aa34a94cb66
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716899845934
+status: 4
+tags: []
+user_id: chusa
